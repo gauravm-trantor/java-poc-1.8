@@ -1,0 +1,44 @@
+# Pipeline for java-poc-1.8 (card SBJ17-2). Design: docs/cards/SBJ17-2.md, section Plan.
+# This first version runs only the acceptance checks AC1 to AC5; Build adds the maven and ui jobs.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the checks' one dependency
+        run: python -m pip install --quiet pyyaml==6.0.2
+      - name: AC1 runs on each pull request to main and push to main
+        if: always()
+        run: python scripts/ci/AC1-triggers.py
+      - name: AC2 mvn -B clean test on JDK 8, fails on any failed test
+        if: always()
+        run: python scripts/ci/AC2-maven-on-jdk8.py
+      - name: AC3 UI tests in headless Chrome on Node 20.19+, fails on any failure
+        if: always()
+        run: python scripts/ci/AC3-ui-headless-chrome.py
+      - name: AC4 the 2 HBase tests run, not skip
+        if: always()
+        run: python scripts/ci/AC4-hbase-tests-ran.py
+      - name: AC5 no existing source, pom or test changes
+        if: always()
+        run: python scripts/ci/AC5-no-existing-file-changed.py origin/main
