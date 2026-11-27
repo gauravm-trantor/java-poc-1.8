@@ -10,6 +10,12 @@
   <artifactId>workflow-app</artifactId>
   <name>workflow-app</name>
 
+  <properties>
+    <!-- Empty by default; JaCoCo's prepare-agent fills it with the coverage agent before the tests run.
+         Declared so that @{argLine} below still resolves when JaCoCo is skipped. -->
+    <argLine></argLine>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>com.example.salesbatch</groupId>
@@ -103,9 +109,10 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <!-- The test classes share one cached Spring context, which reads report.dir once. Setting it here,
              before any class runs, makes the tests pass in any order. The temp folder under target/ keeps
-             reports and uploads inside the build, and mvn clean removes them (card SBJ17-7). -->
+             reports and uploads inside the build, and mvn clean removes them (card SBJ17-7).
+             @{argLine} keeps the JaCoCo agent that the parent's prepare-agent sets (late binding). -->
         <configuration>
-          <argLine>"-Djava.io.tmpdir=${project.build.directory}"</argLine>
+          <argLine>@{argLine} "-Djava.io.tmpdir=${project.build.directory}"</argLine>
           <systemPropertyVariables>
             <report.dir>${project.build.directory}${file.separator}sales-batch-test-reports</report.dir>
           </systemPropertyVariables>
