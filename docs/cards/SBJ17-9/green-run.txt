@@ -1,0 +1,16 @@
+acceptance-sbj17-9	2026-11-27T15:01:12.2872639Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+acceptance-sbj17-9	2026-11-27T15:01:20.4756711Z AC1 PASS: 8 uses: lines in 1 file(s), each a full commit with its release
+acceptance-sbj17-9	2026-11-27T15:01:20.5001244Z AC2 PASS: hbase image is harisekhon/hbase:1.4@sha256:967b43284d28a6f6b040ed36d70b1d6016488cc9ed934438db8d6b1bfcbb14bb
+acceptance-sbj17-9	2026-11-27T15:01:29.6311596Z AC3 PASS: 8 uses: lines and the hbase image match the pins read on the day of pinning, confirmed with GitHub and the registry
+ui	2026-11-27T15:01:11.0539552Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+ui	2026-11-27T15:01:12.5680397Z Download action repository 'actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+ui	2026-11-27T15:01:49.9794709Z ^[[1A^[[2KChrome Headless 158.0.0.0 (Linux 0.0.0): Executed 25 of 25 SUCCESS (0.146 secs / 0.132 secs)
+maven	2026-11-27T15:01:10.8569247Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+maven	2026-11-27T15:01:12.0694175Z Download action repository 'actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880' (SHA:d1374f8ac74474200d16ef8ecee22c7ae7a51880)
+maven	2026-11-27T15:01:12.3263815Z Download action repository 'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+maven	2026-11-27T15:01:28.7573690Z ^[[36;1m    echo "HBase is ready after $((i * 5)) s"^[[0m
+maven	2026-11-27T15:01:48.5139361Z HBase is ready after 10 s
+maven	2026-11-27T15:01:59.5881653Z [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+maven	2026-11-27T15:02:21.0999494Z [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
+maven	2026-11-27T15:02:32.5770432Z [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+maven	2026-11-27T15:02:32.7212176Z PASS AC4: the 2 HBase tests ran against HBase and passed, none skipped
