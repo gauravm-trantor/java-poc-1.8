@@ -1,0 +1,41 @@
+# Runs the workflow-app tests 20 times in a row and checks what must stay unchanged (card SBJ17-11).
+# Design: docs/cards/SBJ17-11.md, section Plan. Scripts: scripts/ci/repeat-tests/.
+name: Repeat tests
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repeat-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  twenty-runs:
+    name: AC3 workflow-app tests pass 20 runs in a row
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+      - name: AC3 workflow-app tests pass 20 runs in a row
+        run: sh scripts/ci/repeat-tests/AC3-twenty-runs.sh 20
+
+  unchanged:
+    name: AC4 existing tests, process file, HBase layout and statuses unchanged
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: AC4 existing tests, process file, HBase layout and statuses unchanged
+        run: sh scripts/ci/repeat-tests/AC4-unchanged.sh origin/${{ github.base_ref || 'main' }}
