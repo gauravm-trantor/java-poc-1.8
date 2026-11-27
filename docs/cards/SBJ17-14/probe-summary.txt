@@ -1,0 +1,19 @@
+old exit 0
+new exit 0
+== old
+java=1.8.0_452
+spark=2.4.8
+scala=2.11.12
+[INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+== new
+java=17.0.15
+spark=3.5.8
+scala=2.12.18
+[INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+== diff
+report-20261113.csv identical
+report-20261115.csv identical

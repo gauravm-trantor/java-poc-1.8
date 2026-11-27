@@ -1,0 +1,49 @@
+package com.example.salesbatch.spark
+
+import java.nio.charset.StandardCharsets
+import java.nio.file.{Files, Paths}
+
+import scala.collection.JavaConverters._
+
+import com.example.salesbatch.common.RowKeys
+import org.apache.spark.{SparkConf, SparkContext}
+import org.junit.Test
+
+/**
+ * Scratch probe for card SBJ17-14 Assess (never committed to the repository).
+ * Runs SalesAggregator.aggregate on each sample-data/sales-<date>.csv with a local Spark, orders the result
+ * by the sales_agg row key (as the HBase scan does) and writes the lines the report would hold, in the
+ * report's format, to target/probe/report-<date>.csv. Also records the versions it ran on.
+ */
+class ZzProbeReportTest {
+  @Test def writeProbeReports(): Unit = {
+    val out = Paths.get("target", "probe")
+    Files.createDirectories(out)
+    val sc = new SparkContext(new SparkConf().setMaster("local[2]").setAppName("probe").set("spark.ui.enabled", "false"))
+    try {
+      Files.write(out.resolve("versions.txt"), Seq(
+        "java=" + System.getProperty("java.version"),
+        "spark=" + sc.version,
+        "scala=" + scala.util.Properties.versionNumberString).asJava, StandardCharsets.UTF_8)
+      val dir = Paths.get("..", "sample-data")
+      val files = Files.list(dir).iterator().asScala.filter(_.getFileName.toString.matches("sales-\\d{8}\\.csv")).toList
+      files.foreach { f =>
+        val date = f.getFileName.toString.substring(6, 14)
+        val rows = Files.readAllLines(f, StandardCharsets.UTF_8).asScala.drop(1).filter(_.trim.nonEmpty).map { l =>
+          val c = l.split(",")
+          RawSale(date, c(2), c(1), c(3).trim.toLong, BigDecimal(new java.math.BigDecimal(c(4).trim).toPlainString))
+        }
+        val agg = SalesAggregator.aggregate(sc.parallelize(rows, 3)).collect()
+          .map { case ((d, r, p), a) => (RowKeys.agg(d, r, p), d, r, p, a) }
+          .sortBy(_._1)
+        val lines = "date,region,productId,totalQty,totalAmount,orderCount" +:
+          agg.toSeq.map { case (_, d, r, p, a) =>
+            // as written to sales_agg (bigDecimal.toPlainString) and read back by loadAgg (new BigDecimal(..).toPlainString)
+            val amount = new java.math.BigDecimal(a.totalAmount.bigDecimal.toPlainString).toPlainString
+            d + "," + r + "," + p + "," + a.totalQty + "," + amount + "," + a.orderCount
+          }
+        Files.write(out.resolve("report-" + date + ".csv"), lines.asJava, StandardCharsets.UTF_8)
+      }
+    } finally sc.stop()
+  }
+}
