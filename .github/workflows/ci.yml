@@ -1,0 +1,109 @@
+# Pipeline for java-poc-1.8 (card SBJ17-2). Design: docs/cards/SBJ17-2.md, section Plan.
+# Checks for branch protection on main: "CI / maven" and "CI / ui".
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # The acceptance checks of card SBJ17-2 that read the pipeline file and the diff (AC1, AC2, AC3, AC5).
+  # They hold for this card only (JDK 8, no existing file changed), so they run only on its pull request
+  # and are skipped on every other one. Do not make "CI / acceptance" a required check.
+  acceptance:
+    if: github.head_ref == 'card/SBJ17-2-pipeline'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install the checks' one dependency
+        run: python -m pip install --quiet pyyaml==6.0.2
+      - name: AC1 runs on each pull request to main and push to main
+        if: always()
+        run: python scripts/ci/AC1-triggers.py
+      - name: AC2 mvn -B clean test on JDK 8, fails on any failed test
+        if: always()
+        run: python scripts/ci/AC2-maven-on-jdk8.py
+      - name: AC3 UI tests in headless Chrome on Node 20.19+, fails on any failure
+        if: always()
+        run: python scripts/ci/AC3-ui-headless-chrome.py
+      - name: AC5 no existing source, pom or test changes
+        if: always()
+        run: python scripts/ci/AC5-no-existing-file-changed.py origin/main
+
+  # Every Maven module on JDK 8 (AC2), with the HBase tests checked as run (AC4).
+  maven:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+      # HBase advertises the name host.docker.internal (docker/local/hbase-server-site.xml). Docker Desktop
+      # resolves it on Windows; on this Linux runner it must point at the published ports on localhost.
+      - name: Resolve host.docker.internal to localhost
+        run: echo "127.0.0.1 host.docker.internal" | sudo tee -a /etc/hosts
+      - name: Start HBase from the repository's local stack
+        run: docker compose -f docker/local/docker-compose.yml up -d hbase
+      - name: Wait for HBase
+        run: |
+          for i in $(seq 1 60); do
+            if nc -z localhost 2181 && nc -z localhost 16000 && nc -z localhost 16020 \
+               && echo "list" | docker exec -i sales-hbase hbase shell -n > /dev/null 2>&1; then
+              echo "HBase is ready after $((i * 5)) s"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "HBase did not start within 5 minutes"
+          docker logs sales-hbase
+          exit 1
+      # Alphabetical order, as on Windows: the existing workflow-app tests share one Spring context and
+      # depend on BatchControllerTest setting report.dir before WebConfigTest builds it (card file, Build).
+      - name: Maven tests
+        run: mvn -B clean test -Dsurefire.runOrder=alphabetical
+      - name: AC4 the 2 HBase tests run, not skip
+        if: always()
+        run: python3 scripts/ci/AC4-hbase-tests-ran.py
+      - name: HBase log
+        if: failure()
+        run: docker logs sales-hbase 2>&1 | tail -200
+      - name: Keep the test reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: surefire-reports
+          path: '**/target/surefire-reports/'
+          if-no-files-found: ignore
+
+  # The UI tests, once, headless in Chrome (AC3). Node 22: Node 20 is past its end of life.
+  ui:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ui
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: ui/package-lock.json
+      - run: npm ci
+      - name: UI tests
+        run: npx ng test --watch=false --browsers=ChromeHeadless
