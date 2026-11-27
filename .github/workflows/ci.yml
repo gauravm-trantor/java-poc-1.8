@@ -44,6 +44,26 @@ jobs:
         if: always()
         run: python scripts/ci/AC5-no-existing-file-changed.py origin/main
 
+  # The acceptance checks of card SBJ17-9 (AC1 to AC3; AC4 is the maven and ui jobs). AC3 holds the pins to
+  # what each label pointed to on the day of pinning, so it runs only on this card's pull request.
+  # Do not make "CI / acceptance-sbj17-9" a required check.
+  acceptance-sbj17-9:
+    if: github.head_ref == 'card/SBJ17-9-pin-pipeline'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: AC1 every uses names a full commit with its release
+        if: always()
+        run: python3 scripts/ci/SBJ17-9/AC1-actions-pinned.py
+      - name: AC2 the HBase image is named by its digest, tag kept
+        if: always()
+        run: python3 scripts/ci/SBJ17-9/AC2-hbase-image-digest.py
+      - name: AC3 each pin is what its label pointed to on the day of pinning
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/ci/SBJ17-9/AC3-pins-match-labels.py
+
   # Every Maven module on JDK 8 (AC2), with the HBase tests checked as run (AC4).
   maven:
     runs-on: ubuntu-24.04
