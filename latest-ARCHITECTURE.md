@@ -134,7 +134,7 @@ flowchart LR
 
 | Dependency | Version | Module | Purpose |
 |---|---|---|---|
-| Angular | 20 | ui | The browser UI (needs Node 20.19+) |
+| Angular | 20 | ui | The browser UI (needs Node 22.12+) |
 | Jetty | 9.4.44 | workflow-app | Embedded web server (no Tomcat or WAR) |
 | Spring MVC | 4.3.30 | workflow-app | REST endpoints, multipart upload |
 | Jackson | 2.9.10.8 | workflow-app | JSON for REST |

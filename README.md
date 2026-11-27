@@ -69,7 +69,7 @@ You need about **6 GB of free RAM**, **10 GB of disk** and internet access for t
 |---|---|---|---|---|
 | 1 | **JDK 8** | Temurin 8 (8u4xx) | https://adoptium.net/temurin/releases/?version=8 | **Must be 8.** Newer JDKs break this dependency set. Choose the `.msi` installer and tick **Set JAVA_HOME variable** and **Add to PATH** |
 | 2 | **Apache Maven** | 3.6 or newer (3.9.9 tested) | https://maven.apache.org/download.cgi | Unzip, then add its `bin` folder to `PATH` |
-| 3 | **Node.js** | **20.19 or newer** (24.14 tested) | https://nodejs.org (LTS) | Angular 20 does not work on Node 12 to 18. Check with `node -v` |
+| 3 | **Node.js** | **22.12 or newer** (22 in the pipeline, 24.14 also tested) | https://nodejs.org (LTS) | Angular 20 does not work on Node 12 to 18. Check with `node -v` |
 | 4 | **Docker** | Docker Desktop or Rancher Desktop | https://www.docker.com/products/docker-desktop/ | Must be **running**. Allow about 4 GB of memory for it |
 | 5 | **Visual Studio Code** | latest | https://code.visualstudio.com | |
 | 6 | **Git** (optional) | any | https://git-scm.com | Gives you Git Bash; useful for the commands below |
@@ -90,12 +90,12 @@ Open a **new** Command Prompt or PowerShell (so it sees the new variables) and c
 java -version        -> must print  1.8.0_...
 echo %JAVA_HOME%     -> the JDK 8 folder, for example C:\Program Files\Eclipse Adoptium\jdk-8.0.504.1-hotspot
 mvn -v               -> Apache Maven 3.6 or newer (and "Java version: 1.8...")
-node -v              -> v20.19 or newer
+node -v              -> v22.12 or newer
 npm -v
 docker info          -> prints server information (no "cannot connect" error)
 ```
 
-If you have several JDKs, set `JAVA_HOME` to JDK 8 and put `%JAVA_HOME%\bin` first on `PATH`. If you have several Node versions (nvm): `nvm use 24.14.0`. nvm applies only to the current terminal, so do it again in each new one.
+If you have several JDKs, set `JAVA_HOME` to JDK 8 and put `%JAVA_HOME%\bin` first on `PATH`. If you have several Node versions (nvm): `nvm use 22`. nvm applies only to the current terminal, so do it again in each new one.
 
 ### 2.3 VS Code extensions
 
@@ -126,7 +126,7 @@ code --install-extension ms-azuretools.vscode-docker
 
 The project code is cross-platform, but the helper scripts and `launch.json` are written for Windows. On macOS or Linux:
 
-- Install the same tools (JDK 8, Maven, Node 20.19+, Docker, VS Code) with your package manager.
+- Install the same tools (JDK 8, Maven, Node 22.12+, Docker, VS Code) with your package manager.
 - Skip `setup-local.cmd` and run its steps by hand (see 3.2).
 - Create `.vscode/settings.json` yourself (see 3.3).
 - `host.docker.internal` must resolve to the host. Docker Desktop does this on macOS; on Linux add `127.0.0.1 host.docker.internal` to `/etc/hosts`.
@@ -255,7 +255,7 @@ cd ui
 npm start
 ```
 
-Open **http://localhost:4300**. (Port 4300 is used because 4200 is often taken; it is set in `ui/angular.json`.) Use Node 20.19 or newer in this terminal.
+Open **http://localhost:4300**. (Port 4300 is used because 4200 is often taken; it is set in `ui/angular.json`.) Use Node 22.12 or newer in this terminal.
 
 ### 4.4 Stop everything
 
@@ -447,7 +447,7 @@ Then use the launch configuration **Debug app (Postgres + Docker Spark cluster)*
 | Symptom | Cause and fix |
 |---|---|
 | **500 on CSV upload**, and `ng serve` shows `http proxy error ... ECONNREFUSED` | The Java API is not running on 8081. Start it (4.2) and wait for `Local debug server ...` |
-| `npm ci` fails with `Cannot read property '@angular/common' of undefined` | Node is too old (12 to 18). Install Node 20.19+; with nvm: `nvm use 24.14.0`, then rerun |
+| `npm ci` fails with `Cannot read property '@angular/common' of undefined` | Node is too old (12 to 18). Install Node 22.12+; with nvm: `nvm use 22`, then rerun |
 | `JAVA_HOME ... is not JDK 8` | Install Temurin 8, set `JAVA_HOME` to it, open a **new** terminal |
 | `Could not find or load main class .port=8081` | PowerShell split a `-D` option at the dot. Quote it: `'-Dserver.port=8081'` |
 | `Could not find or load main class ...LocalDebugServer` | `workflow-app\target\test-classes` is missing from the classpath. Run the build (3.2) |
