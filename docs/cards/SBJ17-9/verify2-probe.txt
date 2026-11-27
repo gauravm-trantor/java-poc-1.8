@@ -1,0 +1,15 @@
+main: 12 uses lines; head: 13 uses lines
+OK ci.yml:26 actions/checkout pin=3d3c42e5aac5 comment=v7.0.1 tag->3d3c42e5aac5 main_label=['v7']
+OK ci.yml:29 actions/setup-python pin=6d4fd22b2046 comment=v7.1.0 tag->6d4fd22b2046 main_label=['v7']
+OK ci.yml:54 actions/checkout pin=3d3c42e5aac5 comment=v7.0.1 tag->3d3c42e5aac5 main_label=['v7']
+OK ci.yml:71 actions/checkout pin=3d3c42e5aac5 comment=v7.0.1 tag->3d3c42e5aac5 main_label=['v7']
+OK ci.yml:72 actions/setup-java pin=d1374f8ac744 comment=v6.3.0 tag->d1374f8ac744 main_label=['v6']
+OK ci.yml:106 actions/upload-artifact pin=cf430e030ddb comment=v7.0.2 tag->cf430e030ddb main_label=['v7']
+OK ci.yml:119 actions/checkout pin=3d3c42e5aac5 comment=v7.0.1 tag->3d3c42e5aac5 main_label=['v7']
+OK ci.yml:120 actions/setup-node pin=949feb2413d6 comment=v7.1.0 tag->949feb2413d6 main_label=['v7']
+OK test-order.yml:27 actions/checkout pin=3d3c42e5aac5 comment=v7.0.1 tag->3d3c42e5aac5 main_label=['v7']
+OK test-order.yml:28 actions/setup-java pin=d1374f8ac744 comment=v6.3.0 tag->d1374f8ac744 main_label=['v6']
+OK test-order.yml:40 actions/checkout pin=3d3c42e5aac5 comment=v7.0.1 tag->3d3c42e5aac5 main_label=['v7']
+OK test-order.yml:41 actions/setup-java pin=d1374f8ac744 comment=v6.3.0 tag->d1374f8ac744 main_label=['v6']
+OK test-order.yml:57 actions/checkout pin=3d3c42e5aac5 comment=v7.0.1 tag->3d3c42e5aac5 main_label=['v7']
+RESULT all pins resolve and keep main's labels

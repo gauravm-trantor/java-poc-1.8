@@ -1,0 +1,39 @@
+=== main CI 46022251225, Test order 46022251178
+maven: success
+acceptance: skipped
+ui: success
+maven: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+maven: [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
+maven: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+maven: PASS AC4: the 2 HBase tests ran against HBase and passed, none skipped
+ui: TOTAL: 25 SUCCESS
+AC2 and AC3: success
+AC1 tests pass in alphabetical order: success
+AC4 existing tests unchanged, no forced order: success
+AC1 tests pass in reversealphabetical order: success
+AC1 tests pass in random order: success
+AC2 and AC3: [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0
+AC2 and AC3: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+AC1 tests pass in alphabetical order: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+AC1 tests pass in reversealphabetical order: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+AC1 tests pass in random order: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+=== head CI 46054757793, Test order 46054757802
+ui: success
+acceptance-sbj17-9: success
+maven: success
+acceptance: skipped
+ui: TOTAL: 25 SUCCESS
+maven: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+maven: [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
+maven: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+maven: PASS AC4: the 2 HBase tests ran against HBase and passed, none skipped
+AC2 and AC3: success
+AC1 tests pass in alphabetical order: success
+AC1 tests pass in random order: success
+AC1 tests pass in reversealphabetical order: success
+AC4 existing tests unchanged, no forced order: success
+AC2 and AC3: [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0
+AC2 and AC3: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+AC1 tests pass in alphabetical order: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+AC1 tests pass in random order: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
+AC1 tests pass in reversealphabetical order: [INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
