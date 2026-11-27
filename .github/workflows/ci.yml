@@ -1,5 +1,5 @@
 # Pipeline for java-poc-1.8 (card SBJ17-2). Design: docs/cards/SBJ17-2.md, section Plan.
-# Checks for branch protection on main: "CI / maven", "CI / ui" and "CI / acceptance".
+# Checks for branch protection on main: "CI / maven" and "CI / ui".
 name: CI
 
 on:
@@ -16,8 +16,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # The acceptance checks that read the pipeline file and the diff (AC1, AC2, AC3, AC5).
+  # The acceptance checks of card SBJ17-2 that read the pipeline file and the diff (AC1, AC2, AC3, AC5).
+  # They hold for this card only (JDK 8, no existing file changed), so they run only on its pull request
+  # and are skipped on every other one. Do not make "CI / acceptance" a required check.
   acceptance:
+    if: github.head_ref == 'card/SBJ17-2-pipeline'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
