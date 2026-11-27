@@ -12,7 +12,7 @@ x-spark: &spark
 
 services:
   hbase:
-    image: harisekhon/hbase:1.4
+    image: harisekhon/hbase:1.4@sha256:967b43284d28a6f6b040ed36d70b1d6016488cc9ed934438db8d6b1bfcbb14bb
     container_name: sales-hbase
     entrypoint: ["sh", "/tmp/start-hbase.sh"]
     volumes:
