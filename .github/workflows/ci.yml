@@ -64,6 +64,34 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 scripts/ci/SBJ17-9/AC3-pins-match-labels.py
 
+  # The acceptance checks of card SBJ17-13 (AC1 to AC3, and AC4's first half; its second half is the maven
+  # and ui jobs and the other workflows). AC4 holds for this card's diff only, so the job runs only on its
+  # pull request. Do not make "CI / acceptance-sbj17-13" a required check.
+  acceptance-sbj17-13:
+    if: github.head_ref == 'card/SBJ17-13-maven-cache'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Install the checks' one dependency
+        run: python -m pip install --quiet pyyaml==6.0.2
+      - name: AC1 each Maven job restores the newest earlier cache when the poms changed
+        if: always()
+        run: python scripts/ci/SBJ17-13/AC1-restore-older-cache.py
+      - name: AC2 each Maven job saves its cache even when tests fail
+        if: always()
+        run: python scripts/ci/SBJ17-13/AC2-save-on-failure.py
+      - name: AC3 Maven retries a refused download at least 5 times over at least a minute
+        if: always()
+        run: python scripts/ci/SBJ17-13/AC3-retry-refused-download.py
+      - name: AC4 no pom, source or test changes
+        if: always()
+        run: python scripts/ci/SBJ17-13/AC4-no-pom-source-test-change.py origin/main
+
   # Every Maven module on JDK 8 (AC2), with the HBase tests checked as run (AC4).
   maven:
     runs-on: ubuntu-24.04
