@@ -51,11 +51,35 @@ jobs:
           distribution: temurin
           java-version: '8'
           cache: maven
+      # HBase advertises the name host.docker.internal (docker/local/hbase-server-site.xml). Docker Desktop
+      # resolves it on Windows; on this Linux runner it must point at the published ports on localhost.
+      - name: Resolve host.docker.internal to localhost
+        run: echo "127.0.0.1 host.docker.internal" | sudo tee -a /etc/hosts
+      - name: Start HBase from the repository's local stack
+        run: docker compose -f docker/local/docker-compose.yml up -d hbase
+      - name: Wait for HBase
+        run: |
+          for i in $(seq 1 60); do
+            if nc -z localhost 2181 && nc -z localhost 16000 && nc -z localhost 16020 \
+               && echo "list" | docker exec -i sales-hbase hbase shell -n > /dev/null 2>&1; then
+              echo "HBase is ready after $((i * 5)) s"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "HBase did not start within 5 minutes"
+          docker logs sales-hbase
+          exit 1
+      # Alphabetical order, as on Windows: the existing workflow-app tests share one Spring context and
+      # depend on BatchControllerTest setting report.dir before WebConfigTest builds it (card file, Build).
       - name: Maven tests
-        run: mvn -B clean test
+        run: mvn -B clean test -Dsurefire.runOrder=alphabetical
       - name: AC4 the 2 HBase tests run, not skip
         if: always()
         run: python3 scripts/ci/AC4-hbase-tests-ran.py
+      - name: HBase log
+        if: failure()
+        run: docker logs sales-hbase 2>&1 | tail -200
       - name: Keep the test reports
         if: always()
         uses: actions/upload-artifact@v5
@@ -63,3 +87,20 @@ jobs:
           name: surefire-reports
           path: '**/target/surefire-reports/'
           if-no-files-found: ignore
+
+  # The UI tests, once, headless in Chrome (AC3). Node 22: Node 20 is past its end of life.
+  ui:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ui
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: ui/package-lock.json
+      - run: npm ci
+      - name: UI tests
+        run: npx ng test --watch=false --browsers=ChromeHeadless
