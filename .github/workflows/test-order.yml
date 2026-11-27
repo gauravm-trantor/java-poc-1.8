@@ -1,0 +1,61 @@
+# Runs the workflow-app tests in several orders, each from an empty temp folder (card SBJ17-7).
+# Design: docs/cards/SBJ17-7.md, section Plan. Scripts: scripts/ci/test-order/.
+name: Test order
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: test-order-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  any-order:
+    name: AC1 tests pass in ${{ matrix.order }} order
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        order: [alphabetical, reversealphabetical, random]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+      - name: AC1 tests pass in ${{ matrix.order }} order
+        run: sh scripts/ci/test-order/AC1-any-order.sh ${{ matrix.order }}
+
+  reports:
+    name: AC2 and AC3
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+      - name: AC2 WebConfigTest before SalesBatchProcessTest passes
+        if: always()
+        run: sh scripts/ci/test-order/AC2-webconfig-first.sh
+      - name: AC3 no report written outside target
+        if: always()
+        run: sh scripts/ci/test-order/AC3-reports-inside-target.sh
+
+  unchanged:
+    name: AC4 existing tests unchanged, no forced order
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: AC4 existing tests unchanged, pipeline forces no order
+        run: sh scripts/ci/test-order/AC4-tests-unchanged-no-forced-order.sh origin/${{ github.base_ref || 'main' }}

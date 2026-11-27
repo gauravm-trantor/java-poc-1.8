@@ -1,0 +1,4 @@
+head AC2=0 AC3=0 | AC2 passed: WebConfigTest ran first and both classes passed | AC3 passed: every report is inside workflow-app/target:
+m1-main-pom AC2=1 AC3=1 | AC2 FAILED: with WebConfigTest first, a test failed (Maven exit 1) | AC3 FAILED: reports written outside target/:
+m2-no-reportdir AC2=1 AC3=0 | AC2 FAILED: with WebConfigTest first, a test failed (Maven exit 1) | AC3 passed: every report is inside workflow-app/target:
+m3-no-tmpdir AC2=1 AC3=1 | AC2 FAILED: with WebConfigTest first, a test failed (Maven exit 1) | AC3 FAILED: reports written outside target/:
