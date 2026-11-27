@@ -1,0 +1,13 @@
+Comparing with 6e67fdde6c79919016dc5793a2e3fc3b00bed304
+PASS AC1_readme_names_node_22_12
+warning: in the working copy of 'setup-local.cmd', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'latest-ARCHITECTURE.md', LF will be replaced by CRLF the next time Git touches it
+PASS AC2_script_and_architecture_say_22_12
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'latest-ARCHITECTURE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'setup-local.cmd', LF will be replaced by CRLF the next time Git touches it
+PASS AC3_only_three_files_and_card_docs_change
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'latest-ARCHITECTURE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'setup-local.cmd', LF will be replaced by CRLF the next time Git touches it
+PASS AC4_existing_tests_unchanged

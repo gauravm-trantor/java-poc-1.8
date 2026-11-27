@@ -1,0 +1,28 @@
+Folder: C:/Gaurav/Genpact RiskCanvas/POC/java-poc-1.8-programme/.prime/tmp/SBJ17-6/main at 93cd811
+Comparing with 93cd811805e7a63a764e76ceb099b6d2575400fc
+72:| 3 | **Node.js** | **20.19 or newer** (24.14 tested) | https://nodejs.org (LTS) | Angular 20 does not work on Node 12 to 18. Check with `node -v` |
+93:node -v              -> v20.19 or newer
+129:- Install the same tools (JDK 8, Maven, Node 20.19+, Docker, VS Code) with your package manager.
+258:Open **http://localhost:4300**. (Port 4300 is used because 4200 is often taken; it is set in `ui/angular.json`.) Use Node 20.19 or newer in this terminal.
+450:| `npm ci` fails with `Cannot read property '@angular/common' of undefined` | Node is too old (12 to 18). Install Node 20.19+; with nvm: `nvm use 24.14.0`, then rerun |
+  README.md still holds '20.19'
+  README.md: line with '**Node.js**' does not hold '**22.12 or newer**'
+  README.md: line with 'node -v ' does not hold 'v22.12 or newer'
+  README.md: line with 'several Node versions (nvm)' does not hold 'nvm use 22'
+  README.md: line with 'Install the same tools' does not hold 'Node 22.12+'
+  README.md: line with 'in this terminal.' does not hold 'Use Node 22.12 or newer'
+  README.md: line with 'Node is too old' does not hold 'Install Node 22.12+'
+  README.md: line with 'Node is too old' does not hold 'nvm use 22'
+FAIL AC1_readme_names_node_22_12
+17:where node >nul 2>nul || ( echo Node.js was not found on PATH. Install Node 20.19 or newer. & goto fail )
+  setup-local.cmd still holds '20.19'
+137:| Angular | 20 | ui | The browser UI (needs Node 20.19+) |
+  latest-ARCHITECTURE.md still holds '20.19'
+  setup-local.cmd: line with 'Node.js was not found on PATH' does not hold 'Install Node 22.12 or newer.'
+  latest-ARCHITECTURE.md: line with '| Angular | 20 |' does not hold '(needs Node 22.12+)'
+  setup-local.cmd: expected one line changed against 93cd811805e7a63a764e76ceb099b6d2575400fc, got 'no change'
+  latest-ARCHITECTURE.md: expected one line changed against 93cd811805e7a63a764e76ceb099b6d2575400fc, got 'no change'
+FAIL AC2_script_and_architecture_say_22_12
+PASS AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged
+exit=1

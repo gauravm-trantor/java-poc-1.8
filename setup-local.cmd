@@ -14,7 +14,7 @@ if errorlevel 1 (
   goto fail
 )
 where mvn >nul 2>nul || ( echo Maven was not found on PATH. Install Maven 3.6+ . & goto fail )
-where node >nul 2>nul || ( echo Node.js was not found on PATH. Install Node 20.19 or newer. & goto fail )
+where node >nul 2>nul || ( echo Node.js was not found on PATH. Install Node 22.12 or newer. & goto fail )
 where docker >nul 2>nul || ( echo Docker was not found. Install Docker Desktop or Rancher Desktop. & goto fail )
 docker info >nul 2>nul || ( echo Docker is not running. Start it, wait until ready, then run this again. & goto fail )
 

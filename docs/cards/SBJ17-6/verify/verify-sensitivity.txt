@@ -1,0 +1,84 @@
+=== M1 README troubleshooting row back to 20.19 (expect AC1 to FAIL)
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+FAIL AC1_readme_names_node_22_12
+PASS AC2_script_and_architecture_say_22_12
+PASS AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged
+=== M2 README first nvm hint back to 24.14.0 (expect AC1 to FAIL)
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+FAIL AC1_readme_names_node_22_12
+PASS AC2_script_and_architecture_say_22_12
+PASS AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged
+=== M3 README macOS and Linux line loosened to 22+ (expect AC1 to FAIL)
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+FAIL AC1_readme_names_node_22_12
+PASS AC2_script_and_architecture_say_22_12
+PASS AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged
+=== M4 setup-local.cmd message says 22 only (expect AC2 to FAIL)
+warning: in the working copy of 'setup-local.cmd', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'setup-local.cmd', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'setup-local.cmd', LF will be replaced by CRLF the next time Git touches it
+PASS AC1_readme_names_node_22_12
+FAIL AC2_script_and_architecture_say_22_12
+PASS AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged
+=== M5 setup-local.cmd check itself changed on the same line (expect AC2 to FAIL)
+warning: in the working copy of 'setup-local.cmd', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'setup-local.cmd', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'setup-local.cmd', LF will be replaced by CRLF the next time Git touches it
+PASS AC1_readme_names_node_22_12
+FAIL AC2_script_and_architecture_say_22_12
+PASS AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged
+=== M6 setup-local.cmd line endings flipped (expect AC2 to FAIL)
+PASS AC1_readme_names_node_22_12
+PASS AC2_script_and_architecture_say_22_12
+PASS AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged
+=== M7 architecture note loosened (expect AC2 to FAIL)
+warning: in the working copy of 'latest-ARCHITECTURE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'latest-ARCHITECTURE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'latest-ARCHITECTURE.md', LF will be replaced by CRLF the next time Git touches it
+PASS AC1_readme_names_node_22_12
+FAIL AC2_script_and_architecture_say_22_12
+PASS AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged
+=== M8 architecture note: a second line changed (expect AC2 to FAIL)
+warning: in the working copy of 'latest-ARCHITECTURE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'latest-ARCHITECTURE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'latest-ARCHITECTURE.md', LF will be replaced by CRLF the next time Git touches it
+PASS AC1_readme_names_node_22_12
+FAIL AC2_script_and_architecture_say_22_12
+PASS AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged
+=== M9 pom.xml changed (expect AC3 to FAIL)
+warning: in the working copy of 'pom.xml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'pom.xml', LF will be replaced by CRLF the next time Git touches it
+PASS AC1_readme_names_node_22_12
+PASS AC2_script_and_architecture_say_22_12
+FAIL AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged
+=== M10 untracked new file at the root (expect AC3 to FAIL)
+PASS AC1_readme_names_node_22_12
+PASS AC2_script_and_architecture_say_22_12
+FAIL AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged
+=== M11 an existing test changed (common/src/test/java/com/example/salesbatch/common/HBaseSalesRepositoryTest.java) (expect AC4 to FAIL)
+warning: in the working copy of 'common/src/test/java/com/example/salesbatch/common/HBaseSalesRepositoryTest.java', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'common/src/test/java/com/example/salesbatch/common/HBaseSalesRepositoryTest.java', LF will be replaced by CRLF the next time Git touches it
+PASS AC1_readme_names_node_22_12
+PASS AC2_script_and_architecture_say_22_12
+FAIL AC3_only_three_files_and_card_docs_change
+FAIL AC4_existing_tests_unchanged
+=== M12 README adds a second, older Node version (not 20.19) (expect AC1 to FAIL)
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+PASS AC1_readme_names_node_22_12
+PASS AC2_script_and_architecture_say_22_12
+PASS AC3_only_three_files_and_card_docs_change
+PASS AC4_existing_tests_unchanged

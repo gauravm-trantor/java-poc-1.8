@@ -1,0 +1,159 @@
+Comparing with 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+72:| 3 | **Node.js** | **20.19 or newer** (24.14 tested) | https://nodejs.org (LTS) | Angular 20 does not work on Node 12 to 18. Check with `node -v` |
+93:node -v              -> v20.19 or newer
+129:- Install the same tools (JDK 8, Maven, Node 20.19+, Docker, VS Code) with your package manager.
+258:Open **http://localhost:4300**. (Port 4300 is used because 4200 is often taken; it is set in `ui/angular.json`.) Use Node 20.19 or newer in this terminal.
+450:| `npm ci` fails with `Cannot read property '@angular/common' of undefined` | Node is too old (12 to 18). Install Node 20.19+; with nvm: `nvm use 24.14.0`, then rerun |
+  README.md still holds '20.19'
+  README.md: line with '**Node.js**' does not hold '**22.12 or newer**'
+  README.md: line with 'node -v ' does not hold 'v22.12 or newer'
+  README.md: line with 'several Node versions (nvm)' does not hold 'nvm use 22'
+  README.md: line with 'Install the same tools' does not hold 'Node 22.12+'
+  README.md: line with 'in this terminal.' does not hold 'Use Node 22.12 or newer'
+  README.md: line with 'Node is too old' does not hold 'Install Node 22.12+'
+  README.md: line with 'Node is too old' does not hold 'nvm use 22'
+FAIL AC1_readme_names_node_22_12
+17:where node >nul 2>nul || ( echo Node.js was not found on PATH. Install Node 20.19 or newer. & goto fail )
+  setup-local.cmd still holds '20.19'
+137:| Angular | 20 | ui | The browser UI (needs Node 20.19+) |
+  latest-ARCHITECTURE.md still holds '20.19'
+  setup-local.cmd: line with 'Node.js was not found on PATH' does not hold 'Install Node 22.12 or newer.'
+  latest-ARCHITECTURE.md: line with '| Angular | 20 |' does not hold '(needs Node 22.12+)'
+  setup-local.cmd: expected one line changed against 4b825dc642cb6eb9a060e54bf8d69288fbee4904, got '57 0'
+  latest-ARCHITECTURE.md: expected one line changed against 4b825dc642cb6eb9a060e54bf8d69288fbee4904, got '552 0'
+FAIL AC2_script_and_architecture_say_22_12
+  changed outside the allowed files: .gitattributes
+  changed outside the allowed files: .gitignore
+  changed outside the allowed files: common/pom.xml
+  changed outside the allowed files: common/src/main/java/com/example/salesbatch/common/AggRecord.java
+  changed outside the allowed files: common/src/main/java/com/example/salesbatch/common/HBaseSalesRepository.java
+  changed outside the allowed files: common/src/main/java/com/example/salesbatch/common/HBaseTables.java
+  changed outside the allowed files: common/src/main/java/com/example/salesbatch/common/RowKeys.java
+  changed outside the allowed files: common/src/main/java/com/example/salesbatch/common/SalesRecord.java
+  changed outside the allowed files: common/src/main/java/com/example/salesbatch/common/SalesRepository.java
+  changed outside the allowed files: common/src/main/java/com/example/salesbatch/common/SalesSchema.java
+  changed outside the allowed files: common/src/test/java/com/example/salesbatch/common/HBaseSalesRepositoryTest.java
+  changed outside the allowed files: common/src/test/java/com/example/salesbatch/common/HBaseTablesTest.java
+  changed outside the allowed files: common/src/test/java/com/example/salesbatch/common/RecordsTest.java
+  changed outside the allowed files: common/src/test/java/com/example/salesbatch/common/RowKeysTest.java
+  changed outside the allowed files: docker/Dockerfile
+  changed outside the allowed files: docker/hbase-site.xml
+  changed outside the allowed files: docker/local/docker-compose.yml
+  changed outside the allowed files: docker/local/hbase-server-site.xml
+  changed outside the allowed files: docker/local/spark-hbase-site.xml
+  changed outside the allowed files: docker/local/start-hbase.sh
+  changed outside the allowed files: docs/README.previous.md
+  changed outside the allowed files: docs/diagrams/component-dependencies.drawio
+  changed outside the allowed files: docs/diagrams/component-dependencies.drawio.png
+  changed outside the allowed files: docs/diagrams/emr-vs-local.drawio
+  changed outside the allowed files: docs/diagrams/emr-vs-local.drawio.png
+  changed outside the allowed files: docs/diagrams/high-level-architecture.drawio
+  changed outside the allowed files: docs/diagrams/high-level-architecture.drawio.png
+  changed outside the allowed files: docs/diagrams/run-sequence.drawio
+  changed outside the allowed files: docs/diagrams/run-sequence.drawio.png
+  changed outside the allowed files: docs/diagrams/workflow-bpmn.drawio
+  changed outside the allowed files: docs/diagrams/workflow-bpmn.drawio.png
+  changed outside the allowed files: docs/project-summary.docx
+  changed outside the allowed files: docs/project-summary.md
+  changed outside the allowed files: pom.xml
+  changed outside the allowed files: reports/.gitkeep
+  changed outside the allowed files: sample-data/sales-20261113.csv
+  changed outside the allowed files: sample-data/sales-20261115.csv
+  changed outside the allowed files: sample-data/sales-bad.csv
+  changed outside the allowed files: scripts/fix-bloop.js
+  changed outside the allowed files: scripts/write-vscode-settings.ps1
+  changed outside the allowed files: spark-job/pom.xml
+  changed outside the allowed files: spark-job/src/main/scala/com/example/salesbatch/spark/SalesAggregator.scala
+  changed outside the allowed files: spark-job/src/test/resources/hbase-site.xml
+  changed outside the allowed files: spark-job/src/test/scala/com/example/salesbatch/spark/SalesAggregatorHBaseTest.scala
+  changed outside the allowed files: spark-job/src/test/scala/com/example/salesbatch/spark/SalesAggregatorTest.scala
+  changed outside the allowed files: spark-job/src/test/scala/com/example/salesbatch/spark/SalesAggregatorUsageTest.scala
+  changed outside the allowed files: ui/.editorconfig
+  changed outside the allowed files: ui/.gitignore
+  changed outside the allowed files: ui/README.md
+  changed outside the allowed files: ui/angular.json
+  changed outside the allowed files: ui/package-lock.json
+  changed outside the allowed files: ui/package.json
+  changed outside the allowed files: ui/proxy.conf.json
+  changed outside the allowed files: ui/public/favicon.ico
+  changed outside the allowed files: ui/src/app/app.config.ts
+  changed outside the allowed files: ui/src/app/app.css
+  changed outside the allowed files: ui/src/app/app.html
+  changed outside the allowed files: ui/src/app/app.routes.ts
+  changed outside the allowed files: ui/src/app/app.spec.ts
+  changed outside the allowed files: ui/src/app/app.ts
+  changed outside the allowed files: ui/src/index.html
+  changed outside the allowed files: ui/src/main.ts
+  changed outside the allowed files: ui/src/styles.css
+  changed outside the allowed files: ui/tsconfig.app.json
+  changed outside the allowed files: ui/tsconfig.json
+  changed outside the allowed files: ui/tsconfig.spec.json
+  changed outside the allowed files: workflow-app/pom.xml
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/WorkflowServer.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/config/AppConfig.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/config/EngineConfig.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/config/InfraConfig.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/config/WebConfig.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/delegate/AuditStartListener.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/delegate/IngestDelegate.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/delegate/PublishDelegate.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/delegate/RejectDelegate.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/delegate/RunFailure.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/delegate/SparkJobDelegate.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/service/BatchService.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/service/CsvSalesParser.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/spark/ProcessSparkJobLauncher.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/spark/SparkJobLauncher.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/web/BatchController.java
+  changed outside the allowed files: workflow-app/src/main/java/com/example/salesbatch/workflow/web/DataController.java
+  changed outside the allowed files: workflow-app/src/main/resources/application.properties
+  changed outside the allowed files: workflow-app/src/main/resources/logback.xml
+  changed outside the allowed files: workflow-app/src/main/resources/processes/sales-batch.bpmn20.xml
+  changed outside the allowed files: workflow-app/src/main/resources/swagger/index.html
+  changed outside the allowed files: workflow-app/src/main/resources/swagger/openapi.json
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/Await.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/BatchControllerTest.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/BatchControllerUploadTest.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/DataControllerTest.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/InMemorySalesRepository.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/InfraConfigTest.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/LocalDebugServer.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/LocalInfraConfig.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/ProcessSparkJobLauncherTest.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/SalesBatchProcessTest.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/TestInfraConfig.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/WebConfigTest.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/WorkflowServerTest.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/spark/DockerClusterSparkJobLauncher.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/spark/LocalJvmSparkJobLauncher.java
+  changed outside the allowed files: workflow-app/src/test/java/com/example/salesbatch/workflow/spark/ProcessSparkJobLauncherRunTest.java
+  changed outside the allowed files: workflow-app/src/test/resources/hbase-site.xml
+FAIL AC3_only_three_files_and_card_docs_change
+  test files changed:
+    common/src/test/java/com/example/salesbatch/common/HBaseSalesRepositoryTest.java
+    common/src/test/java/com/example/salesbatch/common/HBaseTablesTest.java
+    common/src/test/java/com/example/salesbatch/common/RecordsTest.java
+    common/src/test/java/com/example/salesbatch/common/RowKeysTest.java
+    spark-job/src/test/resources/hbase-site.xml
+    spark-job/src/test/scala/com/example/salesbatch/spark/SalesAggregatorHBaseTest.scala
+    spark-job/src/test/scala/com/example/salesbatch/spark/SalesAggregatorTest.scala
+    spark-job/src/test/scala/com/example/salesbatch/spark/SalesAggregatorUsageTest.scala
+    ui/src/app/app.spec.ts
+    workflow-app/src/test/java/com/example/salesbatch/workflow/Await.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/BatchControllerTest.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/BatchControllerUploadTest.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/DataControllerTest.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/InMemorySalesRepository.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/InfraConfigTest.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/LocalDebugServer.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/LocalInfraConfig.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/ProcessSparkJobLauncherTest.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/SalesBatchProcessTest.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/TestInfraConfig.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/WebConfigTest.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/WorkflowServerTest.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/spark/DockerClusterSparkJobLauncher.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/spark/LocalJvmSparkJobLauncher.java
+    workflow-app/src/test/java/com/example/salesbatch/workflow/spark/ProcessSparkJobLauncherRunTest.java
+    workflow-app/src/test/resources/hbase-site.xml
+FAIL AC4_existing_tests_unchanged
