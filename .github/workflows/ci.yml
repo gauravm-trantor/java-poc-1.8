@@ -93,10 +93,8 @@ jobs:
           echo "HBase did not start within 5 minutes"
           docker logs sales-hbase
           exit 1
-      # Alphabetical order, as on Windows: the existing workflow-app tests share one Spring context and
-      # depend on BatchControllerTest setting report.dir before WebConfigTest builds it (card file, Build).
       - name: Maven tests
-        run: mvn -B clean test -Dsurefire.runOrder=alphabetical
+        run: mvn -B clean test
       - name: AC4 the 2 HBase tests run, not skip
         if: always()
         run: python3 scripts/ci/AC4-hbase-tests-ran.py

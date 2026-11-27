@@ -1,0 +1,9 @@
+m2-no-reportdir run 1 exit=1 | [ERROR]   SalesBatchProcessTest.approvedBatchIsPublished:79 » NoSuchFile C:\Gaurav\Genpa... | AC2 FAILED: with WebConfigTest first, a test failed (Maven exit 1)
+m2-no-reportdir run 2 exit=1 | [ERROR]   SalesBatchProcessTest.approvedBatchIsPublished:73 expected:<1> but was:<0> | AC2 FAILED: with WebConfigTest first, a test failed (Maven exit 1)
+m2-no-reportdir run 3 exit=1 | [ERROR]   SalesBatchProcessTest.approvedBatchIsPublished:79 » NoSuchFile C:\Gaurav\Genpa... | AC2 FAILED: with WebConfigTest first, a test failed (Maven exit 1)
+m3-no-tmpdir run 1 exit=1 | [ERROR]   SalesBatchProcessTest.approvedBatchIsPublished:79 » NoSuchFile C:\Users\GAURAV... | AC2 FAILED: with WebConfigTest first, a test failed (Maven exit 1)
+m3-no-tmpdir run 2 exit=1 | [ERROR]   SalesBatchProcessTest.approvedBatchIsPublished:73 expected:<1> but was:<0> | AC2 FAILED: with WebConfigTest first, a test failed (Maven exit 1)
+m3-no-tmpdir run 3 exit=1 | [ERROR]   SalesBatchProcessTest.approvedBatchIsPublished:73 expected:<1> but was:<0> | AC2 FAILED: with WebConfigTest first, a test failed (Maven exit 1)
+head run 1 exit=0 | AC2 passed: WebConfigTest ran first and both classes passed
+head run 2 exit=0 | AC2 passed: WebConfigTest ran first and both classes passed
+head run 3 exit=1 | AC2 FAILED: with WebConfigTest first, a test failed (Maven exit 1)

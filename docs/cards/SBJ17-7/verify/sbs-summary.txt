@@ -1,0 +1,10 @@
+main build exit=0 sha=1d0b183
+head build exit=0 sha=6b04ba4
+class/resource files: main 45, head 45
+classes and resources: identical
+jar list: identical: ./common/target/common-1.0.0-SNAPSHOT.jar ./spark-job/target/original-spark-job-1.0.0-SNAPSHOT.jar ./spark-job/target/spark-job-1.0.0-SNAPSHOT.jar ./workflow-app/target/original-workflow-app.jar ./workflow-app/target/workflow-app.jar 
+entries same: ./common/target/common-1.0.0-SNAPSHOT.jar
+entries same: ./spark-job/target/original-spark-job-1.0.0-SNAPSHOT.jar
+entries same: ./spark-job/target/spark-job-1.0.0-SNAPSHOT.jar
+entries same: ./workflow-app/target/original-workflow-app.jar
+entries same: ./workflow-app/target/workflow-app.jar
