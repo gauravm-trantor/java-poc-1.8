@@ -21,8 +21,11 @@ final class RunFailure {
         String pid = execution.getProcessInstanceId();
         String message = e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
         LOG.error("Process {}: step {} failed: {}", pid, step, message, e);
-        repository.recordError(pid, message);
-        repository.updateAudit(pid, "FAILED", null);
+        // After the commit, so the run has ended before a client can see FAILED; the reason first, then the status.
+        AfterCommit.run(pid, () -> {
+            repository.recordError(pid, message);
+            repository.updateAudit(pid, "FAILED", null);
+        });
         execution.setVariable("failed", true);
     }
 }
