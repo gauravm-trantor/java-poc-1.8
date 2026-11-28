@@ -1,10 +1,11 @@
 package com.example.salesbatch.spark
 
 import com.example.salesbatch.common.{RowKeys, SalesSchema}
+import org.apache.hadoop.hbase.CompareOperator
 import org.apache.hadoop.hbase.HBaseConfiguration
 import org.apache.hadoop.hbase.TableName
 import org.apache.hadoop.hbase.client.{ConnectionFactory, Put, Result, Scan}
-import org.apache.hadoop.hbase.filter.{CompareFilter, RegexStringComparator, RowFilter}
+import org.apache.hadoop.hbase.filter.{RegexStringComparator, RowFilter}
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable
 import org.apache.hadoop.hbase.mapreduce.{TableInputFormat, TableMapReduceUtil}
 import org.apache.hadoop.hbase.util.Bytes
@@ -52,7 +53,7 @@ object SalesAggregator {
     scan.addFamily(SalesSchema.RAW_CF)
     scan.setCaching(500)
     scan.setCacheBlocks(false)
-    scan.setFilter(new RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator(RowKeys.rawDateRegex(date))))
+    scan.setFilter(new RowFilter(CompareOperator.EQUAL, new RegexStringComparator(RowKeys.rawDateRegex(date))))
     conf.set(TableInputFormat.SCAN, TableMapReduceUtil.convertScanToString(scan))
 
     sc.newAPIHadoopRDD(conf, classOf[TableInputFormat], classOf[ImmutableBytesWritable], classOf[Result])

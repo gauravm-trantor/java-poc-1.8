@@ -6,4 +6,4 @@ IP=$(hostname -i | awk '{print $1}')
 grep -v "host.docker.internal" /etc/hosts > /tmp/hosts.new
 echo "$IP host.docker.internal" >> /tmp/hosts.new
 cat /tmp/hosts.new > /etc/hosts
-exec /entrypoint.sh
+exec sh /run-hbase.sh
