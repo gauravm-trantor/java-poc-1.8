@@ -11,6 +11,14 @@ on:
 permissions:
   contents: read
 
+# Card SBJ17-13: Maven waits longer and retries more before it gives up on a refused download (HTTP 429):
+# 6 retries, 10 s x attempt apart (10+20+...+60 = 210 s). Maven reads MAVEN_ARGS on every mvn call. The first
+# pair is Maven Resolver 1.x's name (Maven 3.9), the second Resolver 2.x's (Maven 3.10 and later).
+env:
+  MAVEN_ARGS: >-
+    -Daether.connector.http.retryHandler.count=6 -Daether.connector.http.retryHandler.interval=10000
+    -Daether.transport.http.retryHandler.count=6 -Daether.transport.http.retryHandler.interval=10000
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -105,7 +113,19 @@ jobs:
         with:
           distribution: temurin
           java-version: '8'
-          cache: maven
+      # Card SBJ17-13: restore the Maven repository, falling back to the newest older cache when the poms
+      # changed (setup-java's own cache has no fallback). The job's last two steps save it.
+      - name: Restore the Maven repository
+        id: maven-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ github.job }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}-${{ github.job }}-${{ hashFiles('**/pom.xml') }}-partial-
+            maven-${{ runner.os }}-${{ github.job }}-
+            maven-${{ runner.os }}-
+            setup-java-${{ runner.os }}-x64-maven-
       # HBase advertises the name host.docker.internal (docker/local/hbase-server-site.xml). Docker Desktop
       # resolves it on Windows; on this Linux runner it must point at the published ports on localhost.
       - name: Resolve host.docker.internal to localhost
@@ -140,6 +160,20 @@ jobs:
           name: surefire-reports
           path: '**/target/surefire-reports/'
           if-no-files-found: ignore
+      # Card SBJ17-13: save the Maven repository, on a red run too. A red run saves under a -partial- key,
+      # so the full key stays free for the next green run. Keep these two steps last.
+      - name: Save the Maven repository
+        if: success() && steps.maven-cache.outcome == 'success' && steps.maven-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.m2/repository
+          key: ${{ steps.maven-cache.outputs.cache-primary-key }}
+      - name: Save the Maven repository, run failed
+        if: failure() && steps.maven-cache.outcome == 'success' && steps.maven-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.m2/repository
+          key: ${{ steps.maven-cache.outputs.cache-primary-key }}-partial-${{ github.run_id }}-${{ github.run_attempt }}
 
   # The UI tests, once, headless in Chrome (AC3). Node 22: Node 20 is past its end of life.
   ui:

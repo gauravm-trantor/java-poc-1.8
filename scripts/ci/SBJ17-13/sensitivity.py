@@ -38,8 +38,11 @@ SAVE_FAIL = {"name": "Save the Maven repository, run failed", "if": "failure() &
              "uses": "actions/cache/save@" + PIN,
              "with": {"path": "~/.m2/repository",
                       "key": PRIMARY + "-partial-${{ github.run_id }}-${{ github.run_attempt }}"}}
-MAVEN_ARGS = "-Daether.connector.http.retryHandler.count=6 -Daether.connector.http.retryHandler.interval=10000"
-TOO_FEW = "-Daether.connector.http.retryHandler.count=4 -Daether.connector.http.retryHandler.interval=10000"
+# Build: the runner's Maven 3.10 (Resolver 2.x) reads aether.transport.*; Maven 3.9 (Resolver 1.x) aether.connector.*.
+MAVEN_ARGS = ("-Daether.connector.http.retryHandler.count=6 -Daether.connector.http.retryHandler.interval=10000"
+              " -Daether.transport.http.retryHandler.count=6 -Daether.transport.http.retryHandler.interval=10000")
+TOO_FEW = ("-Daether.connector.http.retryHandler.count=4 -Daether.connector.http.retryHandler.interval=10000"
+           " -Daether.transport.http.retryHandler.count=4 -Daether.transport.http.retryHandler.interval=10000")
 AC1, AC2 = "AC1-restore-older-cache.py", "AC2-save-on-failure.py"
 
 
@@ -75,9 +78,11 @@ def built_copy(work, mutate=None):
             if not at:
                 continue
             changed = True
-            (steps[at[0]].get("with") or {}).pop("cache", None)
-            steps.insert(at[0] + 1, copy.deepcopy(RESTORE))
-            steps.extend([copy.deepcopy(SAVE_OK), copy.deepcopy(SAVE_FAIL)])
+            # After the build the workflows hold the design already; apply it only where it is missing.
+            if not any(is_(step, "actions/cache/restore") for step in steps):
+                (steps[at[0]].get("with") or {}).pop("cache", None)
+                steps.insert(at[0] + 1, copy.deepcopy(RESTORE))
+                steps.extend([copy.deepcopy(SAVE_OK), copy.deepcopy(SAVE_FAIL)])
             if mutate and name == "ci.yml" and job_id == "maven":
                 mutate(steps)
         if changed:
