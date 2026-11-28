@@ -52,7 +52,8 @@ public class PublishDelegate implements JavaDelegate {
         Files.write(report, lines, StandardCharsets.UTF_8);
 
         execution.setVariable("reportPath", report.toString());
-        repository.updateAudit(pid, "COMPLETED", (String) execution.getVariable("approver"));
+        // Under the same lock as the late WAITING_APPROVAL write, so that write cannot replace this one.
+        AuditWrites.write(repository, pid, "COMPLETED", (String) execution.getVariable("approver"));
         LOG.info("Process {}: published {} aggregate rows to {}", pid, rows.size(), report);
     }
 }
