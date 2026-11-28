@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.CompareOperator;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
@@ -18,12 +19,11 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
-import org.apache.hadoop.hbase.filter.CompareFilter;
 import org.apache.hadoop.hbase.filter.RegexStringComparator;
 import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 
-/** HBase 1.4 implementation. Values are stored as UTF-8 strings to keep the dummy app easy to inspect in the shell. */
+/** HBase implementation (HBase 2.6 client). Values are stored as UTF-8 strings to keep the dummy app easy to inspect in the shell. */
 public class HBaseSalesRepository implements SalesRepository, Closeable {
 
     private final Connection connection;
@@ -76,7 +76,7 @@ public class HBaseSalesRepository implements SalesRepository, Closeable {
         // Row keys are salted (<salt>_<date>_<orderId>), so one date is spread over all salts: filter the scan.
         Scan scan = new Scan();
         scan.addFamily(SalesSchema.RAW_CF);
-        scan.setFilter(new RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator(RowKeys.rawDateRegex(date))));
+        scan.setFilter(new RowFilter(CompareOperator.EQUAL, new RegexStringComparator(RowKeys.rawDateRegex(date))));
         List<SalesRecord> out = new ArrayList<>();
         try (Table table = connection.getTable(TableName.valueOf(SalesSchema.RAW_TABLE));
              ResultScanner scanner = table.getScanner(scan)) {
@@ -97,7 +97,8 @@ public class HBaseSalesRepository implements SalesRepository, Closeable {
 
     @Override
     public List<AggRecord> loadAgg(String date) {
-        Scan scan = new Scan(Bytes.toBytes(RowKeys.aggStart(date)), Bytes.toBytes(RowKeys.aggStop(date)));
+        Scan scan = new Scan().withStartRow(Bytes.toBytes(RowKeys.aggStart(date)))
+                .withStopRow(Bytes.toBytes(RowKeys.aggStop(date)));
         List<AggRecord> out = new ArrayList<>();
         try (Table table = connection.getTable(TableName.valueOf(SalesSchema.AGG_TABLE));
              ResultScanner scanner = table.getScanner(scan)) {
