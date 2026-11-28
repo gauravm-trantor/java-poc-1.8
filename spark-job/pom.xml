@@ -39,9 +39,10 @@
         <exclusion><groupId>org.apache.hadoop</groupId><artifactId>*</artifactId></exclusion>
       </exclusions>
     </dependency>
+    <!-- HBase 2 moved TableInputFormat and TableMapReduceUtil to hbase-mapreduce (which brings hbase-server) -->
     <dependency>
       <groupId>org.apache.hbase</groupId>
-      <artifactId>hbase-server</artifactId>
+      <artifactId>hbase-mapreduce</artifactId>
       <version>${hbase.version}</version>
       <exclusions>
         <exclusion><groupId>org.apache.hadoop</groupId><artifactId>*</artifactId></exclusion>

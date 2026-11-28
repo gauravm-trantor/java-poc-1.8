@@ -126,7 +126,7 @@ jobs:
       - name: Resolve host.docker.internal to localhost
         run: echo "127.0.0.1 host.docker.internal" | sudo tee -a /etc/hosts
       - name: Start HBase from the repository's local stack
-        run: docker compose -f docker/local/docker-compose.yml up -d hbase
+        run: docker compose -f docker/local/docker-compose.yml up -d --build hbase
       - name: Wait for HBase
         run: |
           for i in $(seq 1 60); do
