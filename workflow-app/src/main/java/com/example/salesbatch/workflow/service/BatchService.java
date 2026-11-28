@@ -4,14 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.salesbatch.common.SalesRepository;
+import com.example.salesbatch.workflow.delegate.AuditWrites;
+import com.example.salesbatch.workflow.delegate.RunFailure;
 
 @Service
 public class BatchService {
@@ -21,12 +26,15 @@ public class BatchService {
     private final RuntimeService runtimeService;
     private final TaskService taskService;
     private final SalesRepository repository;
+    private final HistoryService historyService;
 
     @Autowired
-    public BatchService(RuntimeService runtimeService, TaskService taskService, SalesRepository repository) {
+    public BatchService(RuntimeService runtimeService, TaskService taskService, SalesRepository repository,
+            HistoryService historyService) {
         this.runtimeService = runtimeService;
         this.taskService = taskService;
         this.repository = repository;
+        this.historyService = historyService;
     }
 
     /**
@@ -60,9 +68,41 @@ public class BatchService {
         taskService.complete(tasks.get(0).getId(), vars);
     }
 
-    /** Audit status (QUEUED, RUNNING, WAITING_APPROVAL, COMPLETED, REJECTED, FAILED) or null if the id is unknown. */
+    /**
+     * Audit status (QUEUED, RUNNING, WAITING_APPROVAL, COMPLETED, REJECTED, FAILED) or null if the id is unknown.
+     *
+     * WAITING_APPROVAL and FAILED are written after the engine commits (card SBJ17-11). If the audit store was down
+     * for longer than that write's retries, the audit still says RUNNING while the engine has moved on. The engine is
+     * then the record: a RUNNING run with an approval task is written as WAITING_APPROVAL, and a RUNNING run the
+     * engine has ended is written as FAILED with its reason (COMPLETED and REJECTED are written inside their step, so
+     * an ended run still at RUNNING can only have failed). The repair writes only while the audit still says RUNNING.
+     */
     public String status(String processInstanceId) {
-        return repository.auditStatus(processInstanceId);
+        String status = repository.auditStatus(processInstanceId);
+        if (!"RUNNING".equals(status)) {
+            return status;
+        }
+        if (taskService.createTaskQuery().processInstanceId(processInstanceId).taskDefinitionKey("approval")
+                .count() > 0) {
+            AuditWrites.writeIf(repository, processInstanceId, "RUNNING", "WAITING_APPROVAL");
+            return repository.auditStatus(processInstanceId);
+        }
+        if (runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).count() == 0) {
+            HistoricProcessInstance ended = historyService.createHistoricProcessInstanceQuery()
+                    .processInstanceId(processInstanceId).finished().singleResult();
+            if (ended != null) {
+                AuditWrites.failIf(repository, processInstanceId, "RUNNING", failureReason(processInstanceId));
+                return repository.auditStatus(processInstanceId);
+            }
+        }
+        return status;
+    }
+
+    private String failureReason(String processInstanceId) {
+        HistoricVariableInstance reason = historyService.createHistoricVariableInstanceQuery()
+                .processInstanceId(processInstanceId).variableName(RunFailure.FAILURE_REASON).singleResult();
+        return reason == null || reason.getValue() == null
+                ? "The run failed; its reason was not recorded" : String.valueOf(reason.getValue());
     }
 
     /** Why a run failed, or null. */

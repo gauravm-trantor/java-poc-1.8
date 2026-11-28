@@ -21,6 +21,10 @@ import com.example.salesbatch.common.SalesRepository;
  * status: if the store is down, that read throws, the step rolls back and the job executor retries it, as it did
  * when the write itself was inside the transaction. After the commit, a write that fails is tried again a few
  * times; only if every attempt fails is it logged, because the step has committed and cannot be rolled back.
+ *
+ * A store that stays down longer than those retries does not leave the run at RUNNING for good: the engine has
+ * committed the approval task or the run's end, and the next status read repairs the audit from the engine
+ * ({@code BatchService.status}). The retries here only make that repair rarely needed.
  */
 final class AfterCommit {
 
@@ -64,8 +68,8 @@ final class AfterCommit {
                 return true;
             } catch (RuntimeException e) {
                 if (i >= pausesMillis.length) {
-                    LOG.error("Process {}: audit write after commit failed {} times; the run's audit status was not"
-                            + " updated", processInstanceId, i + 1, e);
+                    LOG.error("Process {}: audit write after commit failed {} times; the next status read repairs it"
+                            + " from the engine", processInstanceId, i + 1, e);
                     return false;
                 }
                 LOG.warn("Process {}: audit write after commit failed, trying again: {}", processInstanceId,

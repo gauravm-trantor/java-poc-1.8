@@ -13,7 +13,7 @@ import com.example.salesbatch.common.SalesRepository;
  * The lock is held by this workflow app, so it covers approvals handled by the same app; the audit store itself has
  * no compare-and-write in {@link SalesRepository}.
  */
-final class AuditWrites {
+public final class AuditWrites {
 
     private static final Object LOCK = new Object();
 
@@ -27,12 +27,29 @@ final class AuditWrites {
     }
 
     /** Writes {@code status} only if the run's status is still {@code expected}. Returns whether it wrote. */
-    static boolean writeIf(SalesRepository repository, String processInstanceId, String expected, String status) {
+    public static boolean writeIf(SalesRepository repository, String processInstanceId, String expected,
+            String status) {
         synchronized (LOCK) {
             if (!expected.equals(repository.auditStatus(processInstanceId))) {
                 return false;
             }
             repository.updateAudit(processInstanceId, status, null);
+            return true;
+        }
+    }
+
+    /**
+     * Records {@code reason} and writes FAILED, only if the run's status is still {@code expected}. Returns whether it
+     * wrote.
+     */
+    public static boolean failIf(SalesRepository repository, String processInstanceId, String expected,
+            String reason) {
+        synchronized (LOCK) {
+            if (!expected.equals(repository.auditStatus(processInstanceId))) {
+                return false;
+            }
+            repository.recordError(processInstanceId, reason);
+            repository.updateAudit(processInstanceId, "FAILED", null);
             return true;
         }
     }

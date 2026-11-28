@@ -12,7 +12,10 @@ import com.example.salesbatch.common.SalesRepository;
  * {@code failed=true}, and the process routes to its failed end event. The one exception is an audit store that does
  * not answer: then the step throws and is retried, so the failure is not lost (see {@link AfterCommit}).
  */
-final class RunFailure {
+public final class RunFailure {
+
+    /** Process variable that holds why a run failed. */
+    public static final String FAILURE_REASON = "failureReason";
 
     private static final Logger LOG = LoggerFactory.getLogger(RunFailure.class);
 
@@ -28,5 +31,7 @@ final class RunFailure {
             repository.updateAudit(pid, "FAILED", null);
         });
         execution.setVariable("failed", true);
+        // Kept in the engine's history, so a status read can still record the reason if the write above was lost.
+        execution.setVariable(FAILURE_REASON, message);
     }
 }
