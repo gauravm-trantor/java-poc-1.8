@@ -1,0 +1,20 @@
+2026-11-27T14:57:23.6914369Z FAIL: .github/workflows/ci.yml:26 uses: actions/checkout@v7 (not a 40-character commit with a # v<release> comment)
+2026-11-27T14:57:23.6920348Z FAIL: .github/workflows/ci.yml:29 uses: actions/setup-python@v7 (not a 40-character commit with a # v<release> comment)
+2026-11-27T14:57:23.6926030Z FAIL: .github/workflows/ci.yml:54 uses: actions/checkout@v7 (not a 40-character commit with a # v<release> comment)
+2026-11-27T14:57:23.6931563Z FAIL: .github/workflows/ci.yml:71 uses: actions/checkout@v7 (not a 40-character commit with a # v<release> comment)
+2026-11-27T14:57:23.6937045Z FAIL: .github/workflows/ci.yml:72 uses: actions/setup-java@v6 (not a 40-character commit with a # v<release> comment)
+2026-11-27T14:57:23.6942963Z FAIL: .github/workflows/ci.yml:108 uses: actions/upload-artifact@v7 (not a 40-character commit with a # v<release> comment)
+2026-11-27T14:57:23.6948856Z FAIL: .github/workflows/ci.yml:121 uses: actions/checkout@v7 (not a 40-character commit with a # v<release> comment)
+2026-11-27T14:57:23.6954459Z FAIL: .github/workflows/ci.yml:122 uses: actions/setup-node@v7 (not a 40-character commit with a # v<release> comment)
+2026-11-27T14:57:23.6957862Z AC1 FAIL: 8 of 8 uses: lines not pinned
+2026-11-27T14:57:23.7388122Z AC2 FAIL: hbase image is harisekhon/hbase:1.4, expected harisekhon/hbase:1.4@sha256:<64 hex>
+2026-11-27T14:57:26.2792976Z FAIL: .github/workflows/ci.yml:26 uses: actions/checkout@v7 is not pinned
+2026-11-27T14:57:26.2794150Z FAIL: .github/workflows/ci.yml:29 uses: actions/setup-python@v7 is not pinned
+2026-11-27T14:57:26.2794958Z FAIL: .github/workflows/ci.yml:54 uses: actions/checkout@v7 is not pinned
+2026-11-27T14:57:26.2795974Z FAIL: .github/workflows/ci.yml:71 uses: actions/checkout@v7 is not pinned
+2026-11-27T14:57:26.2796888Z FAIL: .github/workflows/ci.yml:72 uses: actions/setup-java@v6 is not pinned
+2026-11-27T14:57:26.2797757Z FAIL: .github/workflows/ci.yml:108 uses: actions/upload-artifact@v7 is not pinned
+2026-11-27T14:57:26.2798914Z FAIL: .github/workflows/ci.yml:121 uses: actions/checkout@v7 is not pinned
+2026-11-27T14:57:26.2799938Z FAIL: .github/workflows/ci.yml:122 uses: actions/setup-node@v7 is not pinned
+2026-11-27T14:57:26.2801227Z FAIL: hbase image is harisekhon/hbase:1.4, expected harisekhon/hbase:1.4@sha256:967b43284d28a6f6b040ed36d70b1d6016488cc9ed934438db8d6b1bfcbb14bb
+2026-11-27T14:57:26.2802238Z AC3 FAIL: 9 problem(s)

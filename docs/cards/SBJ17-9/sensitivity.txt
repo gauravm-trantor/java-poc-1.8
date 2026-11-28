@@ -1,0 +1,20 @@
+== today's files (red) ==
+OK   expected fail got fail AC1 today: AC1 FAIL: 8 of 8 uses: lines not pinned
+OK   expected fail got fail AC2 today: AC2 FAIL: hbase image is harisekhon/hbase:1.4, expected harisekhon/hbase:1.4@sha256:<64 hex>
+OK   expected fail got fail AC3 today: AC3 FAIL: 9 problem(s)
+== pinned copy (green) ==
+OK   expected pass got pass AC1 pinned: AC1 PASS: 8 uses: lines in 1 file(s), each a full commit with its release
+OK   expected pass got pass AC2 pinned: AC2 PASS: hbase image is harisekhon/hbase:1.4@sha256:967b43284d28a6f6b040ed36d70b1d6016488cc9ed934438db8d6b1bfcbb14bb
+OK   expected pass got pass AC3 pinned: AC3 PASS: 8 uses: lines and the hbase image match the pins read on the day of pinning (offline)
+OK   expected pass got pass AC3 pinned, online: AC3 PASS: 8 uses: lines and the hbase image match the pins read on the day of pinning, confirmed with GitHub and the registry
+== broken copies (each must fail) ==
+OK   expected fail got fail AC1 short hash: AC1 FAIL: 1 of 8 uses: lines not pinned
+OK   expected fail got fail AC1 no release comment: AC1 FAIL: 1 of 8 uses: lines not pinned
+OK   expected fail got fail AC1 docker:// step: AC1 FAIL: 1 of 8 uses: lines not pinned
+OK   expected pass got pass AC1 wrong commit (form only): AC1 PASS: 8 uses: lines in 1 file(s), each a full commit with its release
+OK   expected fail got fail AC3 wrong commit: AC3 FAIL: 1 problem(s)
+OK   expected fail got fail AC3 wrong release in comment: AC3 FAIL: 1 problem(s)
+OK   expected fail got fail AC2 tag dropped: AC2 FAIL: hbase image is harisekhon/hbase@sha256:967b43284d28a6f6b040ed36d70b1d6016488cc9ed934438db8d6b1bfcbb14bb, expected harisekhon/hbase:1.4@sha256:<64 hex>
+OK   expected fail got fail AC2 short digest: AC2 FAIL: hbase image is harisekhon/hbase:1.4@sha256:967b43284d28a6f6b040ed36d70b1d6016488cc9ed934438db8d6b1bfcbb14b, expected harisekhon/hbase:1.4@sha256:<64 hex>
+OK   expected pass got pass AC2 other digest (form only): AC2 PASS: hbase image is harisekhon/hbase:1.4@sha256:0000000000000000000000000000000000000000000000000000000000000000
+OK   expected fail got fail AC3 other digest: AC3 FAIL: 1 problem(s)
