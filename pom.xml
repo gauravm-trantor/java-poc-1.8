@@ -100,3 +100,4 @@
     </pluginManagement>
   </build>
 </project>
+<!-- PROBE SBJ17-13: changes the pom hash only; never merged -->
