@@ -1,0 +1,18 @@
+== PR head files as they are (online) ==
+OK   expected pass got pass AC1 head: AC1 PASS: 13 uses: lines in 2 file(s), each a full commit with its release
+OK   expected pass got pass AC2 head: AC2 PASS: hbase image is harisekhon/hbase:1.4@sha256:967b43284d28a6f6b040ed36d70b1d6016488cc9ed934438db8d6b1bfcbb14bb
+OK   expected pass got pass AC3 head: AC3 PASS: 13 uses: lines and the hbase image match the pins read on the day of pinning, confirmed with GitHub and the registry
+== main's files, head's checks ==
+OK   expected fail got fail AC1 main: AC1 FAIL: 12 of 12 uses: lines not pinned
+OK   expected fail got fail AC2 main: AC2 FAIL: hbase image is harisekhon/hbase:1.4, expected harisekhon/hbase:1.4@sha256:<64 hex>
+OK   expected fail got fail AC3 main: AC3 FAIL: 13 problem(s)
+== mutants of the real head files ==
+OK   expected fail got fail AC1 last test-order step back to @v7: AC1 FAIL: 1 of 13 uses: lines not pinned
+OK   expected fail got fail AC3 last test-order step back to @v7: AC3 FAIL: 1 problem(s)
+OK   expected pass got pass AC1 skipped job's setup-python one hex off (form only): AC1 PASS: 13 uses: lines in 2 file(s), each a full commit with its release
+OK   expected fail got fail AC3 skipped job's setup-python one hex off: AC3 FAIL: 1 problem(s)
+OK   expected fail got fail AC3 real commit, older release named: AC3 FAIL: 1 problem(s)
+OK   expected fail got fail AC1 new .yaml file with a moving label: AC1 FAIL: 1 of 14 uses: lines not pinned
+OK   expected pass got pass AC2 other digest (form only): AC2 PASS: hbase image is harisekhon/hbase:1.4@sha256:1111111111111111111111111111111111111111111111111111111111111111
+OK   expected fail got fail AC3 other digest: AC3 FAIL: 6 problem(s)
+OK   expected fail got fail AC2/AC3 tag changed to 1.5: AC3 FAIL: 6 problem(s)

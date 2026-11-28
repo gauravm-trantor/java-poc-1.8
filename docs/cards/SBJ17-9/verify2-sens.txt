@@ -1,0 +1,11 @@
+as-expected | head unchanged | expected P P P | got P P P
+as-expected | checkout back to @v7 in test-order.yml | expected F P F | got F P F
+as-expected | setup-node pin one hex off | expected P P F | got P P F
+as-expected | upload-artifact release comment v7.0.1 | expected P P F | got P P F
+as-expected | short hash on setup-java | expected F P F | got F P F
+as-expected | release comment removed | expected F P F | got F P F
+as-expected | new workflow file with moving label | expected F P F | got F P F
+as-expected | image digest dropped (tag only) | expected P F F | got P F F
+as-expected | image digest last char changed | expected P P F | got P P F
+as-expected | image tag 1.4 changed to 1.3 | expected P F F | got P F F
+SUMMARY 10 of 10 as expected
