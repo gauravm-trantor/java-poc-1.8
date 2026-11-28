@@ -1,0 +1,10 @@
+baseline PASS
+warning: in the working copy of 'workflow-app/src/test/java/com/example/salesbatch/workflow/SalesBatchProcessTest.java', LF will be replaced by CRLF the next time Git touches it
+existing-test-edited KILLED
+warning: in the working copy of 'workflow-app/src/main/resources/processes/sales-batch.bpmn20.xml', LF will be replaced by CRLF the next time Git touches it
+process-file-edited KILLED
+warning: in the working copy of 'common/src/main/java/com/example/salesbatch/common/AggRecord.java', LF will be replaced by CRLF the next time Git touches it
+hbase-layout-edited KILLED
+warning: in the working copy of 'workflow-app/src/main/java/com/example/salesbatch/workflow/service/BatchService.java', LF will be replaced by CRLF the next time Git touches it
+new-status-string KILLED
+existing-test-removed KILLED
