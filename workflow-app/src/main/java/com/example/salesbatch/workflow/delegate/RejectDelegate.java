@@ -19,6 +19,8 @@ public class RejectDelegate implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) {
-        repository.updateAudit(execution.getProcessInstanceId(), "REJECTED", (String) execution.getVariable("approver"));
+        // Under the same lock as the late WAITING_APPROVAL write, so that write cannot replace this one.
+        AuditWrites.write(repository, execution.getProcessInstanceId(), "REJECTED",
+                (String) execution.getVariable("approver"));
     }
 }

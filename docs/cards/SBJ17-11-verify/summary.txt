@@ -1,0 +1,11 @@
+cases 10, differ 2
+same default probes
+same default s15-approve
+DIFF default s13-approve fields ['approve_status', 'final', 'approve', 'report', 'statuses']: old {"approve_status": null, "final": null, "approve": 409, "report": null, "statuses": ["QUEUED", "RUNNING", "WAITING_APPROVAL"]} | new {"approve_status": "COMPLETED", "final": {"status": "COMPLETED"}, "approve": 200, "report": "date,region,productId,totalQty,totalAmount,orderCount\r\n<DATE>,EU,P1,5,26.25,2\r\n<DATE>,US,P1,5,30.00,1\r\n<DATE>,US,P2,1,4.00,1\r\n", "statuses": ["QUEUED", "RUNNING", "WAITING_APPROVAL", "COMPLETED"]}
+same default s15-reject
+same default s15-fast-approve
+DIFF default bad fields ['statuses']: old {"statuses": ["QUEUED", "FAILED"]} | new {"statuses": ["QUEUED", "RUNNING", "FAILED"]}
+same default empty
+same default header-only
+same default edge-values
+same default missing-file
